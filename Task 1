@@ -1,0 +1,90 @@
+/* The BMI Tracker app enables users to easily calculate their Body Mass Index (BMI) by entering their weight and height.
+It instantly displays the BMI value along with a corresponding category (underweight, normal weight, overweight, or obese) to help users understand their weight status.*/
+package com.example.text1;
+
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private EditText etHeight, etWeight;
+    private TextView tvResult;
+    private Button btnCalculate;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        etHeight = findViewById(R.id.etHeight);
+        etWeight = findViewById(R.id.etWeight);
+        btnCalculate = findViewById(R.id.btnCalculate);
+        tvResult = findViewById(R.id.tvResult);
+
+        btnCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String heightStr = etHeight.getText().toString();
+                String weightStr = etWeight.getText().toString();
+
+                if (!heightStr.isEmpty() && !weightStr.isEmpty()) {
+                    float height = Float.parseFloat(heightStr) / 100;  // Convert cm to meters
+                    float weight = Float.parseFloat(weightStr);
+                    float bmi = weight / (height * height);
+
+                    // Display BMI and category
+                    String category = getBMICategory(bmi);
+                    tvResult.setText(String.format("Your BMI: %.2f\nCategory: %s", bmi, category));
+
+                    // Apply color based on category
+                    applyCategoryColor(category);
+
+                    // Fade-in animation for the result
+                    ObjectAnimator fadeIn = ObjectAnimator.ofFloat(tvResult, "alpha", 0f, 1f);
+                    fadeIn.setDuration(1000);
+                    fadeIn.start();
+                } else {
+                    Toast.makeText(MainActivity.this, "Please enter height and weight", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private String getBMICategory(float bmi) {
+        if (bmi < 18.5) {
+            return "Underweight";
+        } else if (bmi >= 18.5 && bmi <= 24.9) {
+            return "Normal weight";
+        } else if (bmi >= 25.0 && bmi <= 29.9) {
+            return "Overweight";
+        } else {
+            return "Obese";
+        }
+    }
+
+    private void applyCategoryColor(String category) {
+        switch (category) {
+            case "Underweight":
+                tvResult.setBackgroundColor(Color.parseColor("#ADD8E6"));  // Blue for Underweight
+                break;
+            case "Normal weight":
+                tvResult.setBackgroundColor(Color.parseColor("#90EE90"));  // Green for Normal weight
+                break;
+            case "Overweight":
+                tvResult.setBackgroundColor(Color.parseColor("#FFD700"));  // Yellow for Overweight
+                break;
+            case "Obese":
+                tvResult.setBackgroundColor(Color.parseColor("#FF6347"));  // Red for Obese
+                break;
+        }
+    }
+}
