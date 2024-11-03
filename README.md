@@ -12,7 +12,7 @@ Duration: OCTOBER TO NOVEMBER 2024
 Mentor: Neela Santosh Kumar
 
 ## Overview Of the project
-Here's the updated outline for your BMI Tracker app project using Android Studio:
+
 
 ### Project: BMI Tracker App
 
@@ -69,7 +69,7 @@ To develop a mobile application using Android Studio that allows users to calcul
   - **Git**: For version control.
   - **Android Emulator**: For testing the app on various virtual devices.
 
-This framework will guide you through the development of your BMI Tracker app using Android Studio, ensuring you cover all critical aspects of the project.
+
 
 Output:
 ![Screenshot (55)](https://github.com/user-attachments/assets/2f39eae2-1d8f-4004-87f9-871db13e87ab)
